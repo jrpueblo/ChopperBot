@@ -10,6 +10,7 @@ import random
 
 client = discord.Client()
 
+# NOTE: This Token has been changed and will not work until bot made public
 TOKEN = "OTM4MzAwMDk4MzczMzY1Nzgw.YfoSEA.jJqTfMkmBCCO62JIYjvajGU8QM0"
 
 
