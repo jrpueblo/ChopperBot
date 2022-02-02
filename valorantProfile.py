@@ -76,7 +76,6 @@ def main():
     user = creds.split('#')[0]
     tag = creds.split('#')[1]
     profile = valorantProfile(user, tag)
-    print(profile.getMainStats()[0])
 
 if __name__ == "__main__":
     main()
