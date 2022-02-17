@@ -60,17 +60,25 @@ async def on_message(message):
         await message.channel.send(response)
         return
 
-    if message.channel.name == "valorant-bot":
+    if message.channel.name == "valorant-bot" or message.channel.name == "discord-bot-test":
         #looking up valorant rank
         if user_message.startswith("!lookup"):
             try:
-                response = user_message.split(" ")
-                username = response[1]
-                tag = response[2].replace("#", "")
-                profile = valorantProfile.valorantProfile(username, tag)
-                await message.channel.send("Current Rank: " + profile.getMainStats()[0])
-                await message.channel.send("K/D Ratio: " + profile.getMainStats()[1])
-                await message.channel.send("Win%: " + profile.getMainStats()[2])
+                response = user_message.split(' ')
+                player = []
+                for i in range(1, len(response) - 1):
+                    player.append(response[i])
+                tag = response[len(response) - 1]
+                profile = valorantProfile.valorantProfile(player, tag)
+                if (profile.immortalPlus):
+                    await message.channel.send("Current Rank: " + profile.getMainStats()[0])
+                    await message.channel.send("Leaderboard Rank: " + profile.getMainStats()[1])
+                    await message.channel.send("K/D Ratio: " + profile.getMainStats()[2])
+                    await message.channel.send("Win%: " + profile.getMainStats()[3])
+                else:
+                    await message.channel.send("Current Rank: " + profile.getMainStats()[0])
+                    await message.channel.send("K/D Ratio: " + profile.getMainStats()[1])
+                    await message.channel.send("Win%: " + profile.getMainStats()[2])
             except:
                 await message.channel.send("This user is private or has not played valorant!")
             return
@@ -100,9 +108,15 @@ async def on_message(message):
                 username = response[1]
                 tag = response[2].replace("#", "")
                 profile = valorantProfile.valorantProfile(username, tag)
-                await message.channel.send("Current Rank: " + profile.getMainStats()[0])
-                await message.channel.send("K/D Ratio: " + profile.getMainStats()[1])
-                await message.channel.send("Win%: " + profile.getMainStats()[2])
+                if(profile.immortalPlus):
+                    await message.channel.send("Current Rank: " + profile.getMainStats()[0])
+                    await message.channel.send("Leaderboard Rank: " + profile.getMainStats()[1])
+                    await message.channel.send("K/D Ratio: " + profile.getMainStats()[2])
+                    await message.channel.send("Win%: " + profile.getMainStats()[3])
+                else:
+                    await message.channel.send("Current Rank: " + profile.getMainStats()[0])
+                    await message.channel.send("K/D Ratio: " + profile.getMainStats()[1])
+                    await message.channel.send("Win%: " + profile.getMainStats()[2])
             except:
                 await message.channel.send("This user is private or has not played valorant!")
             return
